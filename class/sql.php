@@ -7,13 +7,13 @@ class sql extends PDO{
         $this->conn = new PDO("mysql:host=localhost;dbname=dbphp7","root","comol123");
     }
     
-    private function setParams($statment, $parameters= array()){
+    private function setParams($statement, $parameters= array()){
         foreach ($parameters as $key => $value) {
-            $this->setParam($key, $value);
+            $this->setParam($statement,$key, $value);
         }
     }
-    private function setParam($statmet ,$key, $value){
-        $statmet->bindParam($key,$value);
+    private function setParam($statement ,$key, $value){
+        $statement->bindParam($key,$value);
     }
 
         public function query($rawQuery, $params = array()){
