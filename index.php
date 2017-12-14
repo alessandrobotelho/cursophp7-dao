@@ -14,9 +14,9 @@
   
   //carrega um usuario usando o login e a senha
   
-  $usuario = new Usuario();
-  $usuario->login("alessandro", "comol");
-  echo $usuario;
+  //$usuario = new Usuario();
+  //$usuario->login("alessandro", "comol");
+  //echo $usuario;
    
 /*  
  * retorna todos os cadastros
@@ -24,5 +24,21 @@
   $usuario = $sql->select("SELECT * FROM tb_usuario");
   echo json_encode($usuario); 
  */
+  
+  //adiciona novo usuario
+  //$aluno = new Usuario("domingos","6739940");
+  //$aluno->insert();
+  // echo $aluno;
+  
+  //Altera usuario
+  
+  $usuario = new Usuario();
+  
+  $usuario->loadById(4);
+  
+  $usuario->update("mariaaparecida", "#$%¨TFG");
+  
+  echo $usuario;
+  
 ?>
 

@@ -39,11 +39,7 @@ class Usuario{
             ":ID"=>$id
         ));
         if(count ($results)>0){
-            $row = $results[0];
-            $this->setIdusuuario($row['idusuario']);
-            $this->setDeslogin($row['deslogin']);
-            $this->setDessenha($row['dessenha']);
-            $this->setDtcadastro(new DateTime($row['dtcadastro']));
+            $this->setData($results[0]);
         }
     }
     public static function getList(){
@@ -63,14 +59,44 @@ public function login($login, $senha){
             ":PASSWORD"=>$senha
         ));
         if(count ($results)>0){
-            $row = $results[0];
-            $this->setIdusuuario($row['idusuario']);
-            $this->setDeslogin($row['deslogin']);
-            $this->setDessenha($row['dessenha']);
-            $this->setDtcadastro(new DateTime($row['dtcadastro']));
+            $this->setData($results[0]);
         }else {
             throw new Exception("Login e/ou senha invalidos");
         }
+}
+public function setData($data){
+            $this->setIdusuuario($data['idusuario']);
+            $this->setDeslogin($data['deslogin']);
+            $this->setDessenha($data['dessenha']);
+            $this->setDtcadastro(new DateTime($data['dtcadastro']));
+}
+
+public function insert(){
+    $sql = new sql();
+    $result = $sql->select("CALL sp_usuarios_insert(:LOGIN, :PASSWORD)",array(
+        ':LOGIN'=> $this->getDeslogin(),
+        ':PASSWORD'=> $this->getDessenha()
+    ));
+    if(count($result)>0){
+        $this->setData($result[0]);
+       
+    }
+}
+public function __construct($login = "",$password="") {
+    $this->setDeslogin($login);
+    $this->setDessenha($password);
+}
+public function update($login,$password){
+    
+    $this->setDeslogin($login);
+    $this->setDessenha($password);
+    
+    $sql = new sql();
+    $sql->query("UPDATE tb_usuario SET deslogin= :LOGIN, dessenha = :PASSWORD WHERE idusuario = :ID" , array(
+        ':LOGIN'=> $this->getDeslogin(),
+        ':PASSWORD'=> $this->getDessenha(),
+        ':ID'=> $this->getIdusuario()
+    ));
 }
 
 public function __toString() {
@@ -78,7 +104,7 @@ public function __toString() {
             "idusuario"=> $this->getIdusuario(),
             "deslogin"=> $this->getDeslogin(),
             "dessenha"=> $this->getDessenha(),
-            "dtcadastro"=> $this->getDtcadastro()->format("d/m/Y H:i:s")
+            "dtcadastro"=> $this->getDtcadastro()->format("d-m-Y H:i:s")
         ));
     }
     
