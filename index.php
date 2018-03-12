@@ -31,12 +31,15 @@
   // echo $aluno;
   
   //Altera usuario
+  //$usuario = new Usuario();
+  //$usuario->loadById(4);
+  //$usuario->update("mariaaparecida", "#$%¨TFG");
+  //echo $usuario;
   
+  //Deletando usuario / registro
   $usuario = new Usuario();
-  
   $usuario->loadById(4);
-  
-  $usuario->update("mariaaparecida", "#$%¨TFG");
+  $usuario->delete();
   
   echo $usuario;
   
